@@ -1,0 +1,49 @@
+/* _content/DB_Lab2/Views/Shared/_Layout.cshtml.rz.scp.css */
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand[b-uoo7kirigd] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-uoo7kirigd] {
+  color: #0077cc;
+}
+
+.btn-primary[b-uoo7kirigd] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-uoo7kirigd], .nav-pills .show > .nav-link[b-uoo7kirigd] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-uoo7kirigd] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-uoo7kirigd] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-uoo7kirigd] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-uoo7kirigd] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-uoo7kirigd] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}

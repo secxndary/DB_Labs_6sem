@@ -33,8 +33,8 @@ create table BOOKS_GENRES (
 	GENRE_ID uniqueidentifier foreign key references GENRES(ID)
 );
 
-create table PUBLICATIONS (
-	ID uniqueidentifier constraint PK_dbo_PUBLICATIONS primary key,
+create table ORDERS (
+	ID uniqueidentifier constraint PK_dbo_ORDERS primary key,
 	BOOK_ID uniqueidentifier foreign key references BOOKS(ID),
 	BOOKS_QUANTITY int NOT NULL,
 
