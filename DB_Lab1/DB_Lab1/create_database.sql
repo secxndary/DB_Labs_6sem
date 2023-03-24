@@ -18,8 +18,7 @@ create table BOOKS (
 	ID uniqueidentifier constraint PK_dbo_BOOKS primary key,
 	AUTHOR_ID uniqueidentifier foreign key references AUTHORS(ID),
 	TITLE nvarchar(max) NOT NULL,
-	PAGES int NOT NULL,
-	PUBLISH_YEAR int
+	PAGES int NOT NULL
 );
 
 create table GENRES (
@@ -29,13 +28,22 @@ create table GENRES (
 );
 
 create table BOOKS_GENRES (
-	BOOK_ID uniqueidentifier foreign key references BOOKS(ID),
-	GENRE_ID uniqueidentifier foreign key references GENRES(ID)
+	BOOK_ID uniqueidentifier foreign key references BOOKS(ID) NOT NULL,
+	GENRE_ID uniqueidentifier foreign key references GENRES(ID) NOT NULL
+);
+
+create table CUSTOMERS (
+	ID uniqueidentifier constraint PK_dbo_CUSTOMERS primary key,
+	COMPANY_NAME nvarchar(max) NOT NULL,
+	ADDRESS nvarchar(max),
+	PHONE nvarchar(20)
 );
 
 create table ORDERS (
 	ID uniqueidentifier constraint PK_dbo_ORDERS primary key,
 	BOOK_ID uniqueidentifier foreign key references BOOKS(ID),
-	BOOKS_QUANTITY int NOT NULL,
-
+	CUSTOMER_ID uniqueidentifier foreign key references CUSTOMERS(ID),
+	ORDER_DATE datetime NOT NULL,
+	QTY int NOT NULL,
+	AMOUNT money NOT NULL
 );
