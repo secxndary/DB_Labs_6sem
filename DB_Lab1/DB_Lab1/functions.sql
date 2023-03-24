@@ -44,7 +44,7 @@ go
 
 
 select * 
-from GET_AUTHOR_ID_BY_NAME_AND_SURNAME(N'Анджей', N'Сапковский')
+from GET_AUTHOR_ID_BY_NAME_AND_SURNAME(N'РђРЅРґР¶РµР№', N'РЎР°РїРєРѕРІСЃРєРёР№')
 go
 
 
@@ -66,7 +66,7 @@ go
 
 
 select * 
-from GET_GENRE_ID_BY_NAME(N'Детектив')
+from GET_GENRE_ID_BY_NAME(N'Р”РµС‚РµРєС‚РёРІ')
 go
 
 

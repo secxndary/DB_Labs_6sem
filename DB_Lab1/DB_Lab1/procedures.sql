@@ -80,7 +80,7 @@ go
 declare @RESULT int;
 exec @RESULT = PLACE_ORDER
 					@COMPANY_NAME = 'OZ',
-					@BOOK_TITLE = N'Бойцовский клуб',
+					@BOOK_TITLE = N'Р‘РѕР№С†РѕРІСЃРєРёР№ РєР»СѓР±',
 					@DATE = '10-10-2023',
 					@QTY = 10,
 					@AMOUNT = 170;
@@ -159,14 +159,14 @@ end catch
 end;
 go
 
---	delete BOOKS where TITLE like N'%Смелов%';
+--	delete BOOKS where TITLE like N'%РЎРјРµР»РѕРІ%';
 declare @RESULT int;
 exec @RESULT = ADD_BOOK_WITH_GENRE_TO_AUTHOR
-					@AUTHOR_NAME = N'Джоан',
-					@AUTHOR_SURNAME = N'Роулинг',
-					@BOOK_TITLE = N'Вова Смелов и Студент-Полурослик',
+					@AUTHOR_NAME = N'Р”Р¶РѕР°РЅ',
+					@AUTHOR_SURNAME = N'Р РѕСѓР»РёРЅРі',
+					@BOOK_TITLE = N'Р’РѕРІР° РЎРјРµР»РѕРІ Рё РЎС‚СѓРґРµРЅС‚-РџРѕР»СѓСЂРѕСЃР»РёРє',
 					@BOOK_PAGES	= 396,
-					@GENRE_NAME	= N'Фэнтези'
+					@GENRE_NAME	= N'Р¤СЌРЅС‚РµР·Рё'
 print '[INFO] ADD_BOOK_WITH_GENRE_TO_AUTHOR returned: ' + cast(@RESULT as varchar);
 go
 
@@ -256,15 +256,15 @@ go
 
 
 --	delete from BOOKS_GENRES where BOOK_ID = 'E27D18AE-02DA-4284-A7B9-927C77B0C80F';
---	delete from GENRES where NAME = N'Дарк фэнтези';
---	delete from BOOKS where TITLE = N'Ведьмак. Сезон Гроз';
+--	delete from GENRES where NAME = N'Р”Р°СЂРє С„СЌРЅС‚РµР·Рё';
+--	delete from BOOKS where TITLE = N'Р’РµРґСЊРјР°Рє. РЎРµР·РѕРЅ Р“СЂРѕР·';
 declare @RESULT int;
 exec @RESULT = ADD_BOOK_WITH_NEW_GENRE
 					@AUTHOR_ID = 'E76E81F1-5B41-476C-BBBC-49F5E6D87D90',
-					@BOOK_TITLE = N'Ведьмак. Сезон Гроз',
+					@BOOK_TITLE = N'Р’РµРґСЊРјР°Рє. РЎРµР·РѕРЅ Р“СЂРѕР·',
 					@BOOK_PAGES	= 351,
-					@GENRE_NAME	= N'Дарк фэнтези',
-					@GENRE_DESCR = N'Тёмная версия обычного фэнтези'
+					@GENRE_NAME	= N'Р”Р°СЂРє С„СЌРЅС‚РµР·Рё',
+					@GENRE_DESCR = N'РўС‘РјРЅР°СЏ РІРµСЂСЃРёСЏ РѕР±С‹С‡РЅРѕРіРѕ С„СЌРЅС‚РµР·Рё'
 print '[INFO] ADD_BOOK_WITH_NEW_GENRE returned: ' + cast(@RESULT as varchar);
 go
 
