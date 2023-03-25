@@ -1,7 +1,8 @@
 global using DB_Lab2.Models;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Data.SqlClient;
-
+global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -8,7 +8,6 @@ public class BookService
     private readonly IConfiguration _configuration;
     private readonly string connectionString;
 
-
     public BookService(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -43,8 +42,6 @@ public class BookService
             return books;
         }
     }
-
-    public Book GetBook(Guid? id) => GetBooks().Find(x => x.Id == id);
 
 
     public async void AddBook(Book book)
@@ -87,4 +84,7 @@ public class BookService
             await sqlCommand.ExecuteNonQueryAsync();
         }
     }
+
+
+    public Book GetBook(Guid? id) => GetBooks().Find(x => x.Id == id);
 }
