@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-primary">Book List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Book" asp-action="Create" class="btn btn-primary p-2" style="width: 220px">
+                <i class="bi bi-plus-circle"></i> 
+                &nbsp; Create new book
+            </a>
+        </div>
+    </div>
+    <br/>
+
+
+    <table class="table" style="width:100%">
+        <thead class="bg-dark">
+            <tr>
+                <th></th>
+                <th class="text-light">Id</th>
+                <th class="text-light">Author Id</th>
+                <th class="text-light">Title</th>
+                <th class="text-light">Pages</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td width="1%"></td>
+                    <td width="15%">@book.Id</td>
+                    <td width="15%">@book.AuthorId</td>
+                    <td width="25%">@book.Title</td>
+                    <td width="10%">@book.Pages</td>
+                    <td width="14%">
+                        <div class="btn-group w-75" role="group">
+                            <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" 
+                            class="btn btn-primary mx-1" style="width: 120px">
+                                <i class="bi bi-pencil-square"></i> 
+                                &nbsp; Edit
+                            </a>
+                        </div>
+                    </td>
+                     <td width="15%">
+                        <div class="btn-group w-75" role="group">
+                            <form method="post" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
+                                <button class="btn btn-danger mx-1" type="submit" style="width: 120px">
+                                    <i class="bi bi-trash3"></i>
+                                    &nbsp; Delete
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

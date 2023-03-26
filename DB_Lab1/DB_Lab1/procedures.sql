@@ -134,11 +134,13 @@ begin try
 			@AUTHOR_ID uniqueidentifier = (select ID from AUTHORS where NAME = @AUTHOR_NAME and SURNAME = @AUTHOR_SURNAME),
 			@GENRE_ID uniqueidentifier = (select ID from GENRES where NAME = @GENRE_NAME);
 
-	insert into BOOKS (ID, TITLE, PAGES, AUTHOR_ID)
-	values (@BOOK_ID, @BOOK_TITLE, @BOOK_PAGES, @AUTHOR_ID);
+	begin tran;
+		insert into BOOKS (ID, TITLE, PAGES, AUTHOR_ID)
+		values (@BOOK_ID, @BOOK_TITLE, @BOOK_PAGES, @AUTHOR_ID);
 
-	insert into BOOKS_GENRES (BOOK_ID, GENRE_ID) 
-	values (@BOOK_ID, @GENRE_ID);
+		insert into BOOKS_GENRES (BOOK_ID, GENRE_ID) 
+		values (@BOOK_ID, @GENRE_ID);
+	commit;
 
 	select * 
 	from   BOOKS_GENRES_AUTHORS
@@ -153,6 +155,7 @@ begin catch
         select @ERROR_MESSAGE = ERROR_MESSAGE(), 
 			   @ERROR_SEVERITY = ERROR_SEVERITY(),
 			   @ERROR_STATE = ERROR_STATE();
+		rollback;
 		raiserror (@ERROR_MESSAGE, @ERROR_SEVERITY, @ERROR_STATE);
         return -1;
 end catch
@@ -224,16 +227,16 @@ begin try
 	declare @BOOK_ID uniqueidentifier = NEWID(),
 			@GENRE_ID uniqueidentifier = NEWID();
 
+	begin tran;
+		insert into BOOKS (ID, TITLE, PAGES, AUTHOR_ID)
+		values (@BOOK_ID, @BOOK_TITLE, @BOOK_PAGES, @AUTHOR_ID);
 
-	insert into BOOKS (ID, TITLE, PAGES, AUTHOR_ID)
-	values (@BOOK_ID, @BOOK_TITLE, @BOOK_PAGES, @AUTHOR_ID);
+		insert into GENRES (ID, NAME, DESCRIPTION)
+		values (@GENRE_ID, @GENRE_NAME, @GENRE_DESCR);
 
-	insert into GENRES (ID, NAME, DESCRIPTION)
-	values (@GENRE_ID, @GENRE_NAME, @GENRE_DESCR);
-
-	insert into BOOKS_GENRES (BOOK_ID, GENRE_ID) 
-	values (@BOOK_ID, @GENRE_ID);
-
+		insert into BOOKS_GENRES (BOOK_ID, GENRE_ID) 
+		values (@BOOK_ID, @GENRE_ID);
+	commit;
 
 	select * 
 	from   BOOKS_GENRES_AUTHORS
@@ -248,6 +251,7 @@ begin catch
         select @ERROR_MESSAGE = ERROR_MESSAGE(), 
 			   @ERROR_SEVERITY = ERROR_SEVERITY(),
 			   @ERROR_STATE = ERROR_STATE();
+		rollback;
 		raiserror (@ERROR_MESSAGE, @ERROR_SEVERITY, @ERROR_STATE);
         return -1;
 end catch
