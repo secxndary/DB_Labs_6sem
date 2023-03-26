@@ -1,0 +1,53 @@
+﻿@model Author
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="d-flex align-items-center justify-content-center pt-md-5" >
+    <form method="post">
+        <div class="p-4 mt-4 border border-light" style="width: 500px">
+
+            <div class="row pb-2">
+                <h2 class="text-primary text-center">Add author</h2>
+            </div>
+
+
+             <div class="mb-3">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Surname">Surname</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Country">Country</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DateOfBirth">Date of Birth</label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+
+            <div class="d-flex justify-content-around">
+                <button asp-controller="Author" asp-action="Create" type="submit" 
+                class="btn btn-primary p-2" style="width: 160px">Create</button>
+                <a asp-controller="Author" asp-action="Index" class="btn btn-secondary p-2" style="width: 160px">Back to list</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts 
+{
+    <partial name="_ValidationScriptsPartial" />
+}

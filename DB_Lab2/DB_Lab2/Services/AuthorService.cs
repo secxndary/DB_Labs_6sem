@@ -2,12 +2,13 @@
 
 namespace DB_Lab2.Services;
 
-public class BookService
+public class AuthorService
 {
+
     private readonly IConfiguration _configuration;
     private readonly string connectionString;
 
-    public BookService(IConfiguration configuration)
+    public AuthorService(IConfiguration configuration)
     {
         _configuration = configuration;
         connectionString = _configuration.GetConnectionString("Default");
@@ -15,12 +16,12 @@ public class BookService
 
 
 
-    public List<Book> GetBooks()
+    public List<Author> GetAuthors()
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            var books = new List<Book>();
-            var sqlExpression = "SELECT * FROM BOOKS";
+            var authors = new List<Author>();
+            var sqlExpression = "SELECT * FROM Authors";
             var sqlCommand = new SqlCommand(sqlExpression, conn);
             var sqlDataAdapter = new SqlDataAdapter(sqlCommand);
             var dataTable = new DataTable();
@@ -30,40 +31,27 @@ public class BookService
 
             for (var i = 0; i < dataTable.Rows.Count; i++)
             {
-                var item = new Book();
+                var item = new Author();
                 item.Id = Guid.Parse(dataTable.Rows[i]["Id"].ToString());
-                item.AuthorId = Guid.Parse(dataTable.Rows[i]["Author_Id"].ToString());
-                item.Title = dataTable.Rows[i]["Title"].ToString();
-                item.Pages = int.Parse(dataTable.Rows[i]["Pages"].ToString());
-                books.Add(item);
+                item.Name = dataTable.Rows[i]["Name"].ToString();
+                item.Surname = dataTable.Rows[i]["Surname"].ToString();
+                item.Country = dataTable.Rows[i]["Country"].ToString();
+                item.DateOfBirth = DateTime.Parse(dataTable.Rows[i]["Date_Of_Birth"].ToString());
+                authors.Add(item);
             }
 
-            return books;
+            return authors;
         }
     }
 
 
-    public async void AddBook(Book book)
+    public async void AddAuthor(Author author)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            book.Id = Guid.NewGuid();
-            var sqlExpression = $"INSERT INTO Books(ID, TITLE, PAGES, AUTHOR_ID) VALUES " +
-                $"('{book.Id}', N'{book.Title}', {book.Pages}, '{book.AuthorId}');" ;
-            var sqlCommand = new SqlCommand(sqlExpression, conn);
-            
-            conn.Open();
-            await sqlCommand.ExecuteNonQueryAsync();
-        }
-    }
-
-
-    public async void UpdateBook(Book book)
-    {
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            var sqlExpression = $"UPDATE Books SET TITLE = N'{book.Title}', PAGES = {book.Pages}, " +
-                $"AUTHOR_ID = '{book.AuthorId}' WHERE ID = '{book.Id}'";
+            author.Id = Guid.NewGuid();
+            var sqlExpression = $"INSERT INTO Authors(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) VALUES " +
+                $"('{author.Id}', N'{author.Name}', N'{author.Surname}', N'{author.Country}', '{author.DateOfBirth}');";
             var sqlCommand = new SqlCommand(sqlExpression, conn);
 
             conn.Open();
@@ -72,11 +60,12 @@ public class BookService
     }
 
 
-    public async void DeleteBook(Guid? id)
+    public async void UpdateAuthor(Author author)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            var sqlExpression = $"DELETE FROM Books WHERE ID = '{id}'";
+            var sqlExpression = $"UPDATE Authors SET NAME = N'{author.Name}', SURNAME = N'{author.Surname}', " +
+                $"COUNTRY = N'{author.Country}', DATE_OF_BIRTH = '{author.DateOfBirth}' WHERE ID = '{author.Id}'";
             var sqlCommand = new SqlCommand(sqlExpression, conn);
 
             conn.Open();
@@ -85,5 +74,18 @@ public class BookService
     }
 
 
-    public Book GetBook(Guid? id) => GetBooks().Find(x => x.Id == id);
+    public async void DeleteAuthor(Guid? id)
+    {
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            var sqlExpression = $"DELETE FROM Authors WHERE ID = '{id}'";
+            var sqlCommand = new SqlCommand(sqlExpression, conn);
+
+            conn.Open();
+            await sqlCommand.ExecuteNonQueryAsync();
+        }
+    }
+
+
+    public Author GetAuthor(Guid? id) => GetAuthors().Find(x => x.Id == id);
 }

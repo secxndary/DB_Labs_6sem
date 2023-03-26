@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Book>
+﻿@model IEnumerable<Author>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,12 +7,12 @@
 
     <div class="row pt-4">
         <div class="col-6">
-            <h1 class="text-primary">Book List</h1>
+            <h1 class="text-primary">Author List</h1>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Book" asp-action="Create" class="btn btn-primary p-2" style="width: 220px">
+            <a asp-controller="Author" asp-action="Create" class="btn btn-primary p-2" style="width: 220px">
                 <i class="bi bi-plus-circle"></i> 
-                &nbsp; Add new book
+                &nbsp; Add new author
             </a>
         </div>
     </div>
@@ -24,34 +24,36 @@
             <tr>
                 <th></th>
                 <th class="text-light">Id</th>
-                <th class="text-light">Author Id</th>
-                <th class="text-light">Title</th>
-                <th class="text-light">Pages</th>
+                <th class="text-light">Name</th>
+                <th class="text-light">Surname</th>
+                <th class="text-light">Country</th>
+                <th class="text-light">Date of Birth</th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var book in Model)
+            @foreach (var author in Model)
             {
                 <tr>
                     <td width="1%"></td>
-                    <td width="15%">@book.Id</td>
-                    <td width="15%">@book.AuthorId</td>
-                    <td width="25%">@book.Title</td>
-                    <td width="10%">@book.Pages</td>
+                    <td width="14%">@author.Id</td>
+                    <td width="12%">@author.Name</td>
+                    <td width="12%">@author.Surname</td>
+                    <td width="15%">@author.Country</td>
+                    <td width="10%">@author.DateOfBirth</td>
                     <td width="14%">
                         <div class="btn-group w-75" role="group">
-                            <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" 
+                            <a asp-controller="Author" asp-action="Edit" asp-route-id="@author.Id" 
                             class="btn btn-primary mx-1" style="width: 120px">
                                 <i class="bi bi-pencil-square"></i> 
                                 &nbsp; Edit
                             </a>
                         </div>
                     </td>
-                     <td width="15%">
+                     <td width="8%">
                         <div class="btn-group w-75" role="group">
-                            <form method="post" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
+                            <form method="post" asp-controller="Author" asp-action="Delete" asp-route-id="@author.Id">
                                 <button class="btn btn-danger mx-1" type="submit" style="width: 120px">
                                     <i class="bi bi-trash3"></i>
                                     &nbsp; Delete
