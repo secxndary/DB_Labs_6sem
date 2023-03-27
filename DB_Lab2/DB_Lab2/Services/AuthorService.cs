@@ -62,6 +62,8 @@ public class AuthorService
 
     public async void UpdateAuthor(Author author)
     {
+        author.DateOfBirth.AddHours(-author.DateOfBirth.Hour);
+        author.DateOfBirth.AddMinutes(-author.DateOfBirth.Minute);
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
             var sqlExpression = $"UPDATE Authors SET NAME = N'{author.Name}', SURNAME = N'{author.Surname}', " +

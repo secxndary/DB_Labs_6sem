@@ -1,0 +1,35 @@
+﻿@model OrderDate
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="d-flex align-items-center justify-content-center pt-md-5" >
+    <form method="post">
+        <div class="p-4 mt-4 border border-light" style="width: 500px">
+
+            <div class="row pb-2">
+                <h2 class="text-primary text-center">Enter dates:</h2>
+            </div>
+
+            
+            <div class="mb-3">
+                <label asp-for="DateStart">Start date</label>
+                <input asp-for="DateStart" class="form-control" type="date"/>
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+            </div>
+      
+            <div class="mb-4">
+                <label asp-for="DateEnd">End date</label>
+                <input asp-for="DateEnd" class="form-control" type="date"/>
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-around">
+                <button asp-controller="Order" asp-action="GetOrders" type="submit" 
+                class="btn btn-primary p-2" style="width: 160px">Get orders</button>
+            </div>
+        </div>
+    </form>
+</div>
+

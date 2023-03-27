@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Orders List";
+}
+
+
+
+<div class="container p-3">
+
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-primary">Orders List</h1>
+        </div>
+    </div>
+    <br/>
+
+
+    <table class="table" style="width:100%">
+        <thead class="bg-dark">
+            <tr>
+                <th></th>
+                <th class="text-light">Id</th>
+                <th class="text-light">BookId</th>
+                <th class="text-light">CustomerId</th>
+                <th class="text-light">OrderDate</th>
+                <th class="text-light">QTY</th>
+                <th class="text-light">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td width="2%"></td>
+                    <td width="9%">@order.Id</td>
+                    <td width="9%">@order.BookId</td>
+                    <td width="9%">@order.CustomerId</td>
+                    <td width="12%">@order.OrderDate</td>
+                    <td width="9%">@order.Qty</td>
+                    <td width="9%">@order.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

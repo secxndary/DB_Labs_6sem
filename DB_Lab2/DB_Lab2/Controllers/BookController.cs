@@ -37,9 +37,14 @@ public class BookController : Controller
     {
         if (ModelState.IsValid)
         {
-            service.AddBook(book);
-            TempData["success"] = "Book successfully created";
-            return RedirectToAction("Index");
+            var result = service.AddBook(book);
+            if (result)
+            {
+                TempData["success"] = "Book successfully created";
+                return RedirectToAction("Index");
+            }
+            else
+                TempData["error"] = "Enter existing AuthorId";
         }
         return View();
     }
@@ -66,9 +71,14 @@ public class BookController : Controller
     {
         if (ModelState.IsValid)
         {
-            service.UpdateBook(book);
-            TempData["success"] = "Book successfully updated";
-            return RedirectToAction("Index");
+            var result = service.UpdateBook(book);
+            if (result)
+            {
+                TempData["success"] = "Book successfully updated";
+                return RedirectToAction("Index");
+            }
+            else
+                TempData["error"] = "Enter existing AuthorId";
         }
         return View();
     }

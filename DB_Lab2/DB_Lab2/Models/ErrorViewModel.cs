@@ -1,4 +1,4 @@
-namespace DB_Lab2.Models;
+﻿namespace DB_Lab2.Models;
 
 public class ErrorViewModel
 {

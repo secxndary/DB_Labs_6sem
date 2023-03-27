@@ -6,10 +6,12 @@ public class BookService
 {
     private readonly IConfiguration _configuration;
     private readonly string connectionString;
+    private AuthorService authorService;
 
     public BookService(IConfiguration configuration)
     {
         _configuration = configuration;
+        authorService = new AuthorService(configuration);
         connectionString = _configuration.GetConnectionString("Default");
     }
 
@@ -43,7 +45,7 @@ public class BookService
     }
 
 
-    public async void AddBook(Book book)
+    public bool AddBook(Book book)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
@@ -53,22 +55,31 @@ public class BookService
             var sqlCommand = new SqlCommand(sqlExpression, conn);
             
             conn.Open();
-            await sqlCommand.ExecuteNonQueryAsync();
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return true;
+            }
+            catch { return false; }
         }
     }
 
 
-    public async void UpdateBook(Book book)
+    public bool UpdateBook(Book book)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
+            var author = authorService.GetAuthor(book.AuthorId);
+            if (author == null) 
+                return false;
             var sqlExpression = $"UPDATE Books SET TITLE = N'{book.Title}', PAGES = {book.Pages}, " +
                 $"AUTHOR_ID = '{book.AuthorId}' WHERE ID = '{book.Id}'";
             var sqlCommand = new SqlCommand(sqlExpression, conn);
 
             conn.Open();
-            await sqlCommand.ExecuteNonQueryAsync();
+            sqlCommand.ExecuteNonQuery();
         }
+        return true;
     }
 
 
