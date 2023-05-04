@@ -25,11 +25,22 @@ set @address = 'Tomina, 14, 25';
 print @address.ToString();
 
 
-create procedure SendEmail
+create procedure SEND_EMAIL
 @receiver nvarchar(200)
 as
 external name DB_Lab3.StoredProcedures.SendEmailUsingCLR
---  drop procedure SendEmail
+--  drop procedure SEND_EMAIL
 
 
-exec SendEmail 'valdaitsevv@mail.ru';
+create trigger UPDATE_ADDRESS
+on CUSTOMERS 
+after update 
+as
+exec SEND_EMAIL 'valdaitsevv@mail.ru';
+--  drop trigger UPDATE_ADDRESS
+
+
+update CUSTOMERS 
+set ADDRESS = 'г. Минск, ул. Пушкина, д. Колотушкина' 
+where COMPANY_NAME = 'OZ';
+--  update CUSTOMERS set ADDRESS = NULL where COMPANY_NAME = 'OZ';
