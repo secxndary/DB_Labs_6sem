@@ -3,12 +3,12 @@ alter table CUSTOMERS add NODE hierarchyid;
 update CUSTOMERS 
 set NODE = hierarchyid::GetRoot() 
 where COMPANY_NAME = N'OZ';
+go
 
 
 
 -- Процедура, отображающая все подчинённые узлы с указанием уровня иерархии
 -- Параметр - значение узла
-go
 create or alter proc GET_DESCENDANTS_BY_HID 
 	@HID hierarchyid
 as
@@ -30,7 +30,7 @@ go
 
 
 exec GET_DESCENDANTS_BY_HID @HID = '/';
-go 
+go
 
 
 
@@ -67,42 +67,55 @@ exec ADD_DESCENDANT_NODE
 	@HID = @NODE;
 exec GET_DESCENDANTS_BY_HID 
 	@HID = @NODE;
+go
 
 
 
 
--- 4. проц, перемещ всю подчиненную ветку
--- парам - знач верхнего узла + знач узла, в кот. перемещ
-
+-- Процедура, перемещающаявсю подчинённую ветку
+-- Параметр №1 - родительский узел ветки
+-- Параметр №2 - новый родительский узел (в который идет перемещение)
 create or alter proc MOVE_NODE_BRANCH
 	@ANCESTOR_OLD hierarchyid, 
 	@ANCESTOR_NEW hierarchyid  
 as
 begin
-DECLARE children_cursor CURSOR FOR  
-	SELECT Hid FROM clients  
-	WHERE Hid.GetAncestor(1) = @OldParent;  
-DECLARE @ChildId hierarchyid;  
-OPEN children_cursor  
-FETCH NEXT FROM children_cursor INTO @ChildId;  
-WHILE @@FETCH_STATUS = 0  
-BEGIN  
-START:  
-    DECLARE @NewId hierarchyid;  
-    SELECT @NewId = @NewParent.GetDescendant(MAX(Hid), NULL)  
-    FROM clients WHERE Hid.GetAncestor(1) = @NewParent;  
 
-    UPDATE clients 
-    SET Hid = Hid.GetReparentedValue(@ChildId, @NewId)  
-    WHERE hid.IsDescendantOf(@ChildId) = 1;  
-    IF @@error <> 0 GOTO START -- On error, retry  
-        FETCH NEXT FROM children_cursor INTO @ChildId;  
-END  
-CLOSE children_cursor;  
-DEALLOCATE children_cursor;  
+declare @HID_DESCENDANT hierarchyid;
+declare CURSOR_DESCENDANT cursor for
+	select	NODE
+	from	CUSTOMERS  
+	where	NODE.GetAncestor(1) = @ANCESTOR_OLD;
+open CURSOR_DESCENDANT;
+fetch next from CURSOR_DESCENDANT into @HID_DESCENDANT;  
+
+while (@@FETCH_STATUS = 0)
+	begin  
+	START:
+		declare @HID_NEW hierarchyid;  
+		select	@HID_NEW = @ANCESTOR_NEW.GetDescendant(MAX(NODE), NULL)  
+		from	CUSTOMERS 
+		where	NODE.GetAncestor(1) = @ANCESTOR_NEW;  
+
+		update	CUSTOMERS 
+		set		NODE = NODE.GetReparentedValue(@HID_DESCENDANT, @HID_NEW)  
+		where	NODE.IsDescendantOf(@HID_DESCENDANT) = 1;
+
+		if (@@error <> 0)
+			goto START
+		fetch next from CURSOR_DESCENDANT into @HID_DESCENDANT;  
+	end
+close CURSOR_DESCENDANT;  
+deallocate CURSOR_DESCENDANT;  
 end;
 go 
 
-exec moveHid '/2/','/1/3/';
-exec moveHid '/1/3/', '/2/';
-select Hid.ToString(), * from clients;
+
+exec MOVE_NODE_BRANCH 
+	@ANCESTOR_OLD = '/2/', 
+	@ANCESTOR_NEW = '/1/';
+exec MOVE_NODE_BRANCH 
+	@ANCESTOR_OLD = '/1/', 
+	@ANCESTOR_NEW = '/2/';
+exec GET_DESCENDANTS_BY_HID 
+	@HID = '/1/';
