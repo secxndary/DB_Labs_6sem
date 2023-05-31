@@ -54,7 +54,7 @@ JOIN
 
 
 -- 4. Разбить результаты запроса на страницы
-DECLARE @PageNumber int = 2;
+DECLARE @PageNumber INT = 2;
 SELECT *
 FROM
 (
@@ -68,13 +68,67 @@ WHERE rn BETWEEN ((@PageNumber - 1) * 20) + 1 AND @PageNumber * 20;
 
 
 -- 5. Удалить дубликаты, используя ROW_NUMBER()
-WITH CTE AS (
-    SELECT *,
-           RN = ROW_NUMBER() OVER (PARTITION BY C.ID, O.BOOK_ID ORDER BY C.ID),
-           ROWID = ROW_NUMBER() OVER (ORDER BY C.ID)
-    FROM CUSTOMERS C
-    JOIN ORDERS O ON C.ID = O.CUSTOMER_ID
-)
-DELETE FROM CTE
-WHERE RN > 1;
+DELETE AUTHORS WHERE SURNAME = N'Челик';
+INSERT INTO AUTHORS(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) VALUES 
+(NEWID(), N'Микро', N'Челик', N'Беларусь', '12-20-2015'),
+(NEWID(), N'Микро', N'Челик', N'Беларусь', '12-20-2015'),
+(NEWID(), N'Микро', N'Челик', N'Беларусь', '12-20-2015');
 
+DELETE x FROM
+(
+	SELECT 
+		*, 
+		rn = ROW_NUMBER() OVER (PARTITION BY NAME, SURNAME, COUNTRY, DATE_OF_BIRTH ORDER BY NAME)
+	FROM 
+		AUTHORS
+) x
+WHERE 
+	rn > 1;
+
+
+
+
+-- 6. Получить сумму заказов помесячно для каждой компании (за 6 месяцев)
+SELECT
+    COMPANY_NAME,
+    MONTH([ORDER_DATE]) AS ORDER_MONTH,
+    SUM(AMOUNT) OVER (PARTITION BY COMPANY_NAME, MONTH([ORDER_DATE]) ORDER BY [ORDER_DATE]) AS MONTLY_AMOUNT
+FROM
+    ORDERS O
+JOIN 
+	CUSTOMERS C ON O.CUSTOMER_ID = C.ID
+WHERE
+    [ORDER_DATE] >= DATEADD(MONTH, -6, GETDATE())
+ORDER BY
+    COMPANY_NAME, ORDER_MONTH, MONTLY_AMOUNT;
+
+
+
+
+-- 7. Найти жанр, в котором написано больше всего книг у каждого автора
+WITH CTE_AuthorGenre AS 
+(
+	SELECT
+		AUTHORS.NAME AS AuthorName,
+		AUTHORS.SURNAME AS AuthorSurname,
+		GENRES.NAME AS GenreName,
+		ROW_NUMBER() OVER (PARTITION BY AUTHORS.ID ORDER BY COUNT(*) DESC) AS Rank
+	FROM
+		AUTHORS
+	JOIN
+		BOOKS ON AUTHORS.ID = BOOKS.AUTHOR_ID
+	JOIN
+		BOOKS_GENRES ON BOOKS.ID = BOOKS_GENRES.BOOK_ID
+	JOIN
+		GENRES ON BOOKS_GENRES.GENRE_ID = GENRES.ID
+	GROUP BY
+		AUTHORS.ID, AUTHORS.NAME, AUTHORS.SURNAME, GENRES.NAME
+)
+SELECT
+	AuthorName,
+	AuthorSurname,
+	GenreName
+FROM
+	CTE_AuthorGenre
+WHERE
+	Rank = 1;
