@@ -1,0 +1,80 @@
+use Sublish;
+
+
+-- 1. Объём заказов в определённой компании
+SELECT DISTINCT
+    CUSTOMERS.COMPANY_NAME,
+    SUM(ORDERS.AMOUNT) OVER (PARTITION BY CUSTOMERS.ID) AS TOTAL_AMOUNT
+FROM
+    CUSTOMERS
+JOIN
+    ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID
+ORDER BY
+	TOTAL_AMOUNT DESC;
+
+
+
+
+-- 2. Сравнение (в процентах) с общим объёмом заказов
+WITH Aggregates AS (
+    SELECT
+        CUSTOMERS.ID,
+        SUM(ORDERS.AMOUNT) AS TOTAL_AMOUNT
+    FROM
+        CUSTOMERS
+    JOIN
+        ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID
+    GROUP BY
+        CUSTOMERS.ID
+)
+SELECT
+    CUSTOMERS.COMPANY_NAME,
+    Aggregates.TOTAL_AMOUNT,
+    CAST(100. * Aggregates.TOTAL_AMOUNT / SUM(Aggregates.TOTAL_AMOUNT) OVER () AS DECIMAL(5,2)) AS PERCENTAGE
+FROM
+    CUSTOMERS
+JOIN
+    Aggregates ON CUSTOMERS.ID = Aggregates.ID;
+
+
+
+
+-- 3. Сравнение с наибольшим объёмом заказов
+SELECT
+    CUSTOMERS.COMPANY_NAME,
+    ORDERS.AMOUNT,
+    MAX(ORDERS.AMOUNT) OVER (PARTITION BY CUSTOMERS.ID) AS MAX_AMOUNT,
+    CAST(100. * ORDERS.AMOUNT / MAX(ORDERS.AMOUNT) OVER (PARTITION BY CUSTOMERS.ID) AS DECIMAL(5,2)) AS PERCENTAGE
+FROM
+    CUSTOMERS
+JOIN
+    ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID;
+
+
+
+
+-- 4. Разбить результаты запроса на страницы
+DECLARE @PageNumber int = 2;
+SELECT *
+FROM
+(
+    SELECT *,
+           ROW_NUMBER() OVER (ORDER BY ID) AS rn
+    FROM ORDERS
+) AS Subquery
+WHERE rn BETWEEN ((@PageNumber - 1) * 20) + 1 AND @PageNumber * 20;
+
+
+
+
+-- 5. Удалить дубликаты, используя ROW_NUMBER()
+WITH CTE AS (
+    SELECT *,
+           RN = ROW_NUMBER() OVER (PARTITION BY C.ID, O.BOOK_ID ORDER BY C.ID),
+           ROWID = ROW_NUMBER() OVER (ORDER BY C.ID)
+    FROM CUSTOMERS C
+    JOIN ORDERS O ON C.ID = O.CUSTOMER_ID
+)
+DELETE FROM CTE
+WHERE RN > 1;
+

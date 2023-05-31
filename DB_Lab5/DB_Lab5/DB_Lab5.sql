@@ -59,7 +59,7 @@ end;
 go
 
 
-declare @NODE hierarchyid = '/'
+declare @NODE hierarchyid = '/1/4/'
 exec ADD_DESCENDANT_NODE
 	@COMPANY_NAME = 'New Sheriff in the Town',
 	@ADDRESS = N'Не важно',
@@ -72,7 +72,7 @@ go
 
 
 
--- Процедура, перемещающаявсю подчинённую ветку
+-- Процедура, перемещающая всю подчинённую ветку
 -- Параметр №1 - родительский узел ветки
 -- Параметр №2 - новый родительский узел (в который идет перемещение)
 create or alter proc MOVE_NODE_BRANCH
@@ -112,10 +112,10 @@ go
 
 
 exec MOVE_NODE_BRANCH 
-	@ANCESTOR_OLD = '/2/', 
-	@ANCESTOR_NEW = '/1/';
+	@ANCESTOR_OLD = '/1/', 
+	@ANCESTOR_NEW = '/6/';
 exec MOVE_NODE_BRANCH 
 	@ANCESTOR_OLD = '/1/', 
 	@ANCESTOR_NEW = '/2/';
 exec GET_DESCENDANTS_BY_HID 
-	@HID = '/1/';
+	@HID = '/6/';
