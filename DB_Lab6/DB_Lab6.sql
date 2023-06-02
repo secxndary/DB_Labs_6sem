@@ -1,15 +1,15 @@
--- 1. Скачать и установить JTDS Driver, версия 1.2!!!
--- Гайд: https://smarttechways.com/2017/07/03/sql-developer-configured-for-microsoft-sql-server/
+-- 1. РЎРєР°С‡Р°С‚СЊ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ JTDS Driver, РІРµСЂСЃРёСЏ 1.2!!!
+-- Р“Р°Р№Рґ: https://smarttechways.com/2017/07/03/sql-developer-configured-for-microsoft-sql-server/
 
 
--- 2. Далее делаем всё по этому гайду:
+-- 2. Р”Р°Р»РµРµ РґРµР»Р°РµРј РІСЃС‘ РїРѕ СЌС‚РѕРјСѓ РіР°Р№РґСѓ:
 -- https://smarttechways.com/2017/07/05/migrate-database-from-sql-server-to-oracle/
 alter session set "_ORACLE_SCRIPT"=true;
 create user MIGRANT identified by MIGRANT;
 grant dba to MIGRANT;
 
 
--- 3. Если не заработало, то проводим миграцию с помощью ChatGPT:
+-- 3. Р•СЃР»Рё РЅРµ Р·Р°СЂР°Р±РѕС‚Р°Р»Рѕ, С‚Рѕ РїСЂРѕРІРѕРґРёРј РјРёРіСЂР°С†РёСЋ СЃ РїРѕРјРѕС‰СЊСЋ ChatGPT:
 CREATE TABLE AUTHORS (
     ID RAW(16) PRIMARY KEY,
     NAME NVARCHAR2(100) NOT NULL,
@@ -63,52 +63,52 @@ CREATE TABLE ORDERSS (
 
 delete from GENRES;
 INSERT INTO GENRES(ID, NAME, DESCRIPTION) 
-SELECT SYS_GUID(), 'Фэнтези', 'шота ненастоящее типа средневековое эльфы гномы фродо вся хуйня' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Фантастика', 'че то нереалистичное но уже прям ваще ненастоящее не верится нихуя' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Детектив', 'кого то хлопнули и ты думаешь ебать а кто это был а хуй знает угадай' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Комедия', 'дохуя смешно что ли сука в украине детей убивают пока ты ржешь уебок' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Трагедия', 'продаются детские ботиночки неношенные. это хемингуей написал' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Драма', 'а в чем сука разница с трагедией я сам не ебу думайте сами' FROM DUAL UNION ALL
-SELECT SYS_GUID(), 'Басня', 'коротко ясно и по делу и со смыслом вот это ахуенно лучший жанр эвер' FROM DUAL UNION ALL
-select SYS_GUID(), 'Былина', 'хуйня про богатырей а больше былин не было ибо нихуя не было на руси' from DUAL;
+SELECT SYS_GUID(), 'Р¤СЌРЅС‚РµР·Рё', 'С€РѕС‚Р° РЅРµРЅР°СЃС‚РѕСЏС‰РµРµ С‚РёРїР° СЃСЂРµРґРЅРµРІРµРєРѕРІРѕРµ СЌР»СЊС„С‹ РіРЅРѕРјС‹ С„СЂРѕРґРѕ РІСЃСЏ С…СѓР№РЅСЏ' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'Р¤Р°РЅС‚Р°СЃС‚РёРєР°', 'С‡Рµ С‚Рѕ РЅРµСЂРµР°Р»РёСЃС‚РёС‡РЅРѕРµ РЅРѕ СѓР¶Рµ РїСЂСЏРј РІР°С‰Рµ РЅРµРЅР°СЃС‚РѕСЏС‰РµРµ РЅРµ РІРµСЂРёС‚СЃСЏ РЅРёС…СѓСЏ' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'Р”РµС‚РµРєС‚РёРІ', 'РєРѕРіРѕ С‚Рѕ С…Р»РѕРїРЅСѓР»Рё Рё С‚С‹ РґСѓРјР°РµС€СЊ РµР±Р°С‚СЊ Р° РєС‚Рѕ СЌС‚Рѕ Р±С‹Р» Р° С…СѓР№ Р·РЅР°РµС‚ СѓРіР°РґР°Р№' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'РљРѕРјРµРґРёСЏ', 'РґРѕС…СѓСЏ СЃРјРµС€РЅРѕ С‡С‚Рѕ Р»Рё СЃСѓРєР° РІ СѓРєСЂР°РёРЅРµ РґРµС‚РµР№ СѓР±РёРІР°СЋС‚ РїРѕРєР° С‚С‹ СЂР¶РµС€СЊ СѓРµР±РѕРє' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'РўСЂР°РіРµРґРёСЏ', 'РїСЂРѕРґР°СЋС‚СЃСЏ РґРµС‚СЃРєРёРµ Р±РѕС‚РёРЅРѕС‡РєРё РЅРµРЅРѕС€РµРЅРЅС‹Рµ. СЌС‚Рѕ С…РµРјРёРЅРіСѓРµР№ РЅР°РїРёСЃР°Р»' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'Р”СЂР°РјР°', 'Р° РІ С‡РµРј СЃСѓРєР° СЂР°Р·РЅРёС†Р° СЃ С‚СЂР°РіРµРґРёРµР№ СЏ СЃР°Рј РЅРµ РµР±Сѓ РґСѓРјР°Р№С‚Рµ СЃР°РјРё' FROM DUAL UNION ALL
+SELECT SYS_GUID(), 'Р‘Р°СЃРЅСЏ', 'РєРѕСЂРѕС‚РєРѕ СЏСЃРЅРѕ Рё РїРѕ РґРµР»Сѓ Рё СЃРѕ СЃРјС‹СЃР»РѕРј РІРѕС‚ СЌС‚Рѕ Р°С…СѓРµРЅРЅРѕ Р»СѓС‡С€РёР№ Р¶Р°РЅСЂ СЌРІРµСЂ' FROM DUAL UNION ALL
+select SYS_GUID(), 'Р‘С‹Р»РёРЅР°', 'С…СѓР№РЅСЏ РїСЂРѕ Р±РѕРіР°С‚С‹СЂРµР№ Р° Р±РѕР»СЊС€Рµ Р±С‹Р»РёРЅ РЅРµ Р±С‹Р»Рѕ РёР±Рѕ РЅРёС…СѓСЏ РЅРµ Р±С‹Р»Рѕ РЅР° СЂСѓСЃРё' from DUAL;
 select * from GENRES;
 
 
 delete from AUTHORS;
 insert into AUTHORS(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Чак', N'Паланик', N'США', TO_DATE('12-23-1968', 'MM-DD-YYYY'));
+(SYS_GUID(), N'Р§Р°Рє', N'РџР°Р»Р°РЅРёРє', N'РЎРЁРђ', TO_DATE('12-23-1968', 'MM-DD-YYYY'));
 insert into AUTHORS(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Джоан', N'Роулинг', N'Великобритания', TO_DATE('10-25-1983', 'MM-DD-YYYY'));
+(SYS_GUID(), N'Р”Р¶РѕР°РЅ', N'Р РѕСѓР»РёРЅРі', N'Р’РµР»РёРєРѕР±СЂРёС‚Р°РЅРёСЏ', TO_DATE('10-25-1983', 'MM-DD-YYYY'));
 insert into AUTHORS(id, name, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Эрих Мария', N'Ремарк', N'Германия', TO_DATE('12-04-1946', 'MM-DD-YYYY'));
+(SYS_GUID(), N'Р­СЂРёС… РњР°СЂРёСЏ', N'Р РµРјР°СЂРє', N'Р“РµСЂРјР°РЅРёСЏ', TO_DATE('12-04-1946', 'MM-DD-YYYY'));
 insert into AUTHORS(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Анджей', N'Сапковский', N'Польша', TO_DATE('03-21-1969', 'MM-DD-YYYY'));
+(SYS_GUID(), N'РђРЅРґР¶РµР№', N'РЎР°РїРєРѕРІСЃРєРёР№', N'РџРѕР»СЊС€Р°', TO_DATE('03-21-1969', 'MM-DD-YYYY'));
 insert into AUTHORS(id, name, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Васiль', N'Быкаў', N'Беларусь', TO_DATE('02-25-1935', 'MM-DD-YYYY'));
+(SYS_GUID(), N'Р’Р°СЃiР»СЊ', N'Р‘С‹РєР°Сћ', N'Р‘РµР»Р°СЂСѓСЃСЊ', TO_DATE('02-25-1935', 'MM-DD-YYYY'));
 insert into AUTHORS(id, name, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Михаил', N'Булкагов', N'Россия', TO_DATE('05-06-1905', 'MM-DD-YYYY'));
+(SYS_GUID(), N'РњРёС…Р°РёР»', N'Р‘СѓР»РєР°РіРѕРІ', N'Р РѕСЃСЃРёСЏ', TO_DATE('05-06-1905', 'MM-DD-YYYY'));
 insert into AUTHORS(ID, NAME, SURNAME, COUNTRY, DATE_OF_BIRTH) values
-(SYS_GUID(), N'Фрэнк', N'Герберт', N'США', TO_DATE('07-19-1949', 'MM-DD-YYYY'));
+(SYS_GUID(), N'Р¤СЂСЌРЅРє', N'Р“РµСЂР±РµСЂС‚', N'РЎРЁРђ', TO_DATE('07-19-1949', 'MM-DD-YYYY'));
 select * from AUTHORS;
 
 
 delete from BOOKS;
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Колыбельная', 315, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
+(SYS_GUID(), N'РљРѕР»С‹Р±РµР»СЊРЅР°СЏ', 315, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Бойцовский клуб', 401, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
+(SYS_GUID(), N'Р‘РѕР№С†РѕРІСЃРєРёР№ РєР»СѓР±', 401, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Удушье', 294, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
+(SYS_GUID(), N'РЈРґСѓС€СЊРµ', 294, HEXTORAW('8A7597F62C4C4EE4886CAAAE37AE3048'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Дюна', 405, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
+(SYS_GUID(), N'Р”СЋРЅР°', 405, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Мессия Дюны', 510, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
+(SYS_GUID(), N'РњРµСЃСЃРёСЏ Р”СЋРЅС‹', 510, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Дети Дюны', 572, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
+(SYS_GUID(), N'Р”РµС‚Рё Р”СЋРЅС‹', 572, HEXTORAW('5A6F0AAEC1D94B5BAA098784D2687CF9'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Гарри Поттер и Узник Азкабана', 340, HEXTORAW('30FDD70A2C0E44DF96FB45FC45E66010'));
+(SYS_GUID(), N'Р“Р°СЂСЂРё РџРѕС‚С‚РµСЂ Рё РЈР·РЅРёРє РђР·РєР°Р±Р°РЅР°', 340, HEXTORAW('30FDD70A2C0E44DF96FB45FC45E66010'));
 insert into BOOKS(id, TITLE, PAGES, AUTHOR_ID) values
-(SYS_GUID(), N'Гарри Поттер и Философский Камень', 385, HEXTORAW('30FDD70A2C0E44DF96FB45FC45E66010'));
+(SYS_GUID(), N'Р“Р°СЂСЂРё РџРѕС‚С‚РµСЂ Рё Р¤РёР»РѕСЃРѕС„СЃРєРёР№ РљР°РјРµРЅСЊ', 385, HEXTORAW('30FDD70A2C0E44DF96FB45FC45E66010'));
 select * from BOOKS;
 
 
@@ -116,17 +116,17 @@ DELETE FROM CLIENTS;
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
 values (SYS_GUID(), N'OZ', NULL, N'+375291847734');
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
-values (SYS_GUID(), N'Комикс Крама', N'г. Минск, ул. Немига, 3-105', '+375447295733');
+values (SYS_GUID(), N'РљРѕРјРёРєСЃ РљСЂР°РјР°', N'Рі. РњРёРЅСЃРє, СѓР». РќРµРјРёРіР°, 3-105', '+375447295733');
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
 values (SYS_GUID(), N'Superlama.by', NULL, '+375333874924');
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
-values (SYS_GUID(), N'Книжный магазин на Пушкинской', N'г. Минск, ул. Пушкина, 105', NULL);
+values (SYS_GUID(), N'РљРЅРёР¶РЅС‹Р№ РјР°РіР°Р·РёРЅ РЅР° РџСѓС€РєРёРЅСЃРєРѕР№', N'Рі. РњРёРЅСЃРє, СѓР». РџСѓС€РєРёРЅР°, 105', NULL);
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
-values (SYS_GUID(), N'Белкинга', N'г. Минск, пр. Независимости, 65-104', '+375448773954');
+values (SYS_GUID(), N'Р‘РµР»РєРёРЅРіР°', N'Рі. РњРёРЅСЃРє, РїСЂ. РќРµР·Р°РІРёСЃРёРјРѕСЃС‚Рё, 65-104', '+375448773954');
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
-values (SYS_GUID(), N'Букваешка', N'г. Минск, ул. Притыкого, 1', '+375257749385');
+values (SYS_GUID(), N'Р‘СѓРєРІР°РµС€РєР°', N'Рі. РњРёРЅСЃРє, СѓР». РџСЂРёС‚С‹РєРѕРіРѕ, 1', '+375257749385');
 insert into CLIENTS (id, COMPANY_NAME, ADDRESS, PHONE)
-values (SYS_GUID(), N'Mybooks.by', N'г. Минск, ул. Октрябрьская, 54', '+375333847582');
+values (SYS_GUID(), N'Mybooks.by', N'Рі. РњРёРЅСЃРє, СѓР». РћРєС‚СЂСЏР±СЂСЊСЃРєР°СЏ, 54', '+375333847582');
 select * from CLIENTS;
 
 

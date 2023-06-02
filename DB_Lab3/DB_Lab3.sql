@@ -36,7 +36,7 @@ create trigger UPDATE_ADDRESS
 on CUSTOMERS 
 after update 
 as
-exec SEND_EMAIL 'valdaitsevv@mail.ru';
+exec SEND_EMAIL 'aapalanjuk@gmail.com';
 --  drop trigger UPDATE_ADDRESS
 
 
