@@ -163,7 +163,7 @@ use Sublish;
 
 	open symmetric key MyData
 	decryption by symmetric key MySymmetricKey;
-	declare @plain_tex nvarchar(512);
+	declare @plain_text nvarchar(512);
 	set @plain_text = 'hello everyone again';
 	print N'Открытый текст:        ' + @plain_text;
 
